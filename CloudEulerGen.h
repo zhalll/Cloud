@@ -4,20 +4,20 @@
 #include<vector>
 #include<string>
 
-//å·²ç»é»˜è®¤ç½‘æ ¼é•¿åº¦ä¸º1
+//ÒÑ¾­Ä¬ÈÏÍø¸ñ³¤¶ÈÎª1
 #define GRID_LENGTH 1
-//åˆ¤æ–­è¯¥ç½‘æ ¼æ˜¯å¦å­˜åœ¨ç‰©è´¨çš„é˜ˆå€¼
+//ÅĞ¶Ï¸ÃÍø¸ñÊÇ·ñ´æÔÚÎïÖÊµÄãĞÖµ
 #define MATERIAL_MIN 1e-6
 
-/*æ˜¯å¦å¯ä»¥çµæ´»è°ƒæ•´ï¼Ÿï¼Ÿï¼Ÿ*/
-//åˆå§‹åŒ–ç¯å¢ƒæœ€å¤§/æœ€å°æ¸©åº¦
+/*ÊÇ·ñ¿ÉÒÔÁé»îµ÷Õû£¿£¿£¿*/
+//³õÊ¼»¯»·¾³×î´ó/×îĞ¡ÎÂ¶È
 #define MAX_AMBIENT_TEMP 25.0
 #define MIN_AMBIENT_TEMP 5.0
-//åˆå§‹åŒ–åœ°é¢æ°´æ°”å¯†åº¦
+//³õÊ¼»¯µØÃæË®ÆøÃÜ¶È
 #define INIT_VAPOR_DENSITY 1.0f
-//åˆå§‹åŒ–åœ°é¢æ°´æ°”æ¸©åº¦
+//³õÊ¼»¯µØÃæË®ÆøÎÂ¶È
 #define INIT_MATERIAL_TEMP 15.0
-//åˆå§‹åŒ–åœ°é¢æ°´æ°”ä¸Šå‡åˆé€Ÿåº¦
+//³õÊ¼»¯µØÃæË®ÆøÉÏÉı³õËÙ¶È
 #define INIT_VELOCITY_W 0.3
 
 class CloudEulerGen
@@ -26,9 +26,9 @@ public:
 	CloudEulerGen(const std::vector<int>& arg, const float epsilon);
 	~CloudEulerGen();
 
-	//ç›´æ¥ç”Ÿæˆå¯¹åº”æ¬¡æ•°çš„æœ€ç»ˆç»“æœ(è¾“å…¥è¿è¡Œæ¬¡æ•°)
+	//Ö±½ÓÉú³É¶ÔÓ¦´ÎÊıµÄ×îÖÕ½á¹û(ÊäÈëÔËĞĞ´ÎÊı)
 	void CloudGenFinalRun(int times);
-	//ç”¨äºdemoå±•ç¤ºæ¯å¸§è¿è¡Œ()
+	//ÓÃÓÚdemoÕ¹Ê¾Ã¿Ö¡ÔËĞĞ()
 	void CloudGenFrameRun();
 
 	const int GetModeFlag();
@@ -45,63 +45,63 @@ public:
 	const int GetFrameCount();
 
 private:
-	int mode_flag_;   //ç”Ÿæˆæ¨¡å¼(0-çƒŸ,1-äº‘ï¼Œé»˜è®¤çƒŸï¼)
+	int mode_flag_;   //Éú³ÉÄ£Ê½(0-ÑÌ,1-ÔÆ£¬Ä¬ÈÏÑÌ£¡)
 
-	/* ç•Œé¢é¡»æŒ‡å®šçš„å‚æ•° */
-	int n_;  //æ¨¡æ‹Ÿç©ºé—´å¤§å°(ä¸åŒ…å«è¾¹ç•Œ)
-	int start_x_;  //å‘å°„æºèµ·å§‹xåæ ‡
-	int end_x_;  //å‘å°„æºç»“æŸxåæ ‡
-	int start_y_;  //å‘å°„æºèµ·å§‹yåæ ‡
-	int end_y_;  //å‘å°„æºç»“æŸyåæ ‡
-	int noise_type_;  //å™ªå£°ç§ç±»
-	float epsilon_;  //æ¶¡æ—‹æŠ‘åˆ¶ç³»æ•°
+	/* ½çÃæĞëÖ¸¶¨µÄ²ÎÊı */
+	int n_;  //Ä£Äâ¿Õ¼ä´óĞ¡(²»°üº¬±ß½ç)
+	int start_x_;  //·¢ÉäÔ´ÆğÊ¼x×ø±ê
+	int end_x_;  //·¢ÉäÔ´½áÊøx×ø±ê
+	int start_y_;  //·¢ÉäÔ´ÆğÊ¼y×ø±ê
+	int end_y_;  //·¢ÉäÔ´½áÊøy×ø±ê
+	int noise_type_;  //ÔëÉùÖÖÀà
+	float epsilon_;  //ÎĞĞıÒÖÖÆÏµÊı
 	/*------------------*/
 
-	float init_vapor_density_;  //åˆå§‹åŒ–æ°´æ°”å¯†åº¦
-	float init_material_temp_;  //åˆå§‹åŒ–ç‰©è´¨æ¸©åº¦
-	float init_velocity_w_;  //åˆå§‹åŒ–ä¸Šå‡åˆé€Ÿåº¦
+	float init_vapor_density_;  //³õÊ¼»¯Ë®ÆøÃÜ¶È
+	float init_material_temp_;  //³õÊ¼»¯ÎïÖÊÎÂ¶È
+	float init_velocity_w_;  //³õÊ¼»¯ÉÏÉı³õËÙ¶È
 
 	int size_;
-	float dt_;   //æ—¶é—´æ­¥é•¿
-	int frame_count_;   //ç”¨äºè®°å½•è¿è¡Œåˆ°ç¬¬å‡ å¸§
+	float dt_;   //Ê±¼ä²½³¤
+	int frame_count_;   //ÓÃÓÚ¼ÇÂ¼ÔËĞĞµ½µÚ¼¸Ö¡
 
-	std::vector<float> velocity_u_;   //xæ–¹å‘é€Ÿåº¦
-	std::vector<float> velocity_v_;   //yæ–¹å‘é€Ÿåº¦
-	std::vector<float> velocity_w_;   //zæ–¹å‘é€Ÿåº¦
-	std::vector<float> vapor_density_;  //æ°´æ°”å¯†åº¦
-	std::vector<float> cloud_density_;  //äº‘å¯†åº¦
-	std::vector<float> ambient_temp_;  //ç¯å¢ƒæ¸©åº¦
-	std::vector<float> material_temp_;  //ç‰©è´¨æ¸©åº¦
+	std::vector<float> velocity_u_;   //x·½ÏòËÙ¶È
+	std::vector<float> velocity_v_;   //y·½ÏòËÙ¶È
+	std::vector<float> velocity_w_;   //z·½ÏòËÙ¶È
+	std::vector<float> vapor_density_;  //Ë®ÆøÃÜ¶È
+	std::vector<float> cloud_density_;  //ÔÆÃÜ¶È
+	std::vector<float> ambient_temp_;  //»·¾³ÎÂ¶È
+	std::vector<float> material_temp_;  //ÎïÖÊÎÂ¶È
 
-	//ç©ºé—´ä¸‰ç»´åæ ‡ä½ç½®è½¬åŒ–ä¸€ç»´å‘é‡å‡½æ•°
+	//¿Õ¼äÈıÎ¬×ø±êÎ»ÖÃ×ª»¯Ò»Î¬ÏòÁ¿º¯Êı
 	const int Position(int i, int j, int k);
-	//è®¡ç®—é€Ÿåº¦åœº
+	//¼ÆËãËÙ¶È³¡
 	void GetVelocity();
-	//è®¡ç®—å¯†åº¦åœº
+	//¼ÆËãÃÜ¶È³¡
 	void GetDensity();
-	//è¾¹ç•Œæ§åˆ¶(value:æ§åˆ¶çš„å¯¹è±¡å  velocity_project_flag:é€Ÿåº¦æŠ•å½±æ ‡è®°(0-ä¸æ˜¯ï¼Œ1-xè½´ï¼Œ2-yè½´ï¼Œ3-zè½´)
+	//±ß½ç¿ØÖÆ(value:¿ØÖÆµÄ¶ÔÏóÃû  velocity_project_flag:ËÙ¶ÈÍ¶Ó°±ê¼Ç(0-²»ÊÇ£¬1-xÖá£¬2-yÖá£¬3-zÖá)
 	void BoundaryCondition(std::vector<float>& value, const int velocity_project_flag);
-	//Advectå¹³æµ(è¦å¹³æµçš„é‡ï¼Œè¯¥é‡ä¸Šä¸€å¸§çš„å€¼ï¼Œæ‰€éœ€è¦çš„ä¸‰ä¸ªæ–¹å‘çš„é€Ÿåº¦)
+	//AdvectÆ½Á÷(ÒªÆ½Á÷µÄÁ¿£¬¸ÃÁ¿ÉÏÒ»Ö¡µÄÖµ£¬ËùĞèÒªµÄÈı¸ö·½ÏòµÄËÙ¶È)
 	void Advect(std::vector<float>& value, const std::vector<float>& pre_value, const std::vector<float>& velocity_u, const std::vector<float>& velocity_v, const std::vector<float>& velocity_w);
-	//é«˜æ–¯èµ›å¾·å°”è¿­ä»£
+	//¸ßË¹ÈüµÂ¶ûµü´ú
 	void GaussSeidelIteration(std::vector<float>& p, const std::vector<float>& div);
-	//ProjectæŠ•å½±
+	//ProjectÍ¶Ó°
 	void Project();
-	//AddBouyancySmokeçƒŸæµ®åŠ›
+	//AddBouyancySmokeÑÌ¸¡Á¦
 	void AddBouyancySmoke();
-	//AddBouyancyCloudçƒŸæµ®åŠ›
+	//AddBouyancyCloudÑÌ¸¡Á¦
 	void AddBouyancyCloud();
-	//VorticityConfinementæ¶¡æ—‹é™åˆ¶
+	//VorticityConfinementÎĞĞıÏŞÖÆ
 	void VorticityConfinement();
-	//PhaseTransitionCloudäº‘ç›¸å˜
+	//PhaseTransitionCloudÔÆÏà±ä
 	void PhaseTransitionCloud();
-	//CorrectTimestepæ—¶é—´æ­¥é•¿çº æ­£(æ˜¯å¦åˆç†ï¼Ÿ)
+	//CorrectTimestepÊ±¼ä²½³¤¾ÀÕı(ÊÇ·ñºÏÀí£¿)
 	void CorrectTimestep();
-	//SourceControlæºæ§åˆ¶
+	//SourceControlÔ´¿ØÖÆ
 	void SourceControl();
-	//NoneNoiseæ— å™ªå£°æº
+	//NoneNoiseÎŞÔëÉùÔ´
 	void NoneNoise();
-	//GaussNoiseé«˜æ–¯å™ªå£°æº
+	//GaussNoise¸ßË¹ÔëÉùÔ´
 	void GaussNoise();
 };
 

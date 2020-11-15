@@ -1,5 +1,6 @@
 from xml_parsing import XmlParsing
 from Cloud_Gen_Based_Euler import CloudEulerGen
+from Cloud_Gen_Based_Euler import WriteVTI
 
 if __name__ == '__main__':
     xml_parsed = XmlParsing('euler.xml')
@@ -15,4 +16,11 @@ if __name__ == '__main__':
     epsilon = xml_parsed.vortex # 涡旋抑制系数
 
     cloud = CloudEulerGen(arg, epsilon)
-    cloud.CloudGenFrameRun()
+    #cloud.CloudGenFrameRun()
+    cloud.CloudGenFinalRun(10)
+    density = cloud.GetVaporDensity()
+    length = xml_parsed.scalar + 2
+    width = xml_parsed.scalar + 2
+    height = xml_parsed.scalar + 2
+    path = xml_parsed.path
+    WriteVTI(length, width, height, density, path)

@@ -19,7 +19,7 @@ CloudEulerGen::CloudEulerGen(const std::vector<int>& arg, const float epsilon)
 	init_material_temp_ = INIT_MATERIAL_TEMP;
 	init_velocity_w_ = INIT_VELOCITY_W;
 
-	size_= (n_ + 2) * (n_ + 2) * (n_ + 2);
+	size_ = (n_ + 2) * (n_ + 2) * (n_ + 2);
 	dt_ = 1.0f;
 	frame_count_ = 0;
 
@@ -27,29 +27,29 @@ CloudEulerGen::CloudEulerGen(const std::vector<int>& arg, const float epsilon)
 	velocity_v_.resize(size_);
 	velocity_w_.resize(size_);
 
-	//çƒŸ
+	//ÑÌ
 	if (mode_flag_ == 0)
 	{
 		vapor_density_.resize(size_);
-		ambient_temp_.resize(n_ + 1);  //ç¯å¢ƒæ¸©åº¦éšé«˜åº¦å˜åŒ–ï¼Œä¸éšæ°´å¹³ä½ç½®å˜åŒ–
+		ambient_temp_.resize(n_ + 1);  //»·¾³ÎÂ¶ÈËæ¸ß¶È±ä»¯£¬²»ËæË®Æ½Î»ÖÃ±ä»¯
 		material_temp_.resize(size_);
 
-		//åˆå§‹åŒ–ç¯å¢ƒæ¸©åº¦
+		//³õÊ¼»¯»·¾³ÎÂ¶È
 		for (int k = 0; k < n_ + 1; k++)
 		{
 			ambient_temp_[k] = MAX_AMBIENT_TEMP + ((MAX_AMBIENT_TEMP - MIN_AMBIENT_TEMP) / n_ - 1) * (1 - k);
 		}
 	}
 
-	//äº‘
+	//ÔÆ
 	if (mode_flag_ == 1)
 	{
 		vapor_density_.resize(size_);
 		cloud_density_.resize(size_);
-		ambient_temp_.resize(n_ + 1);   //ç¯å¢ƒæ¸©åº¦éšé«˜åº¦å˜åŒ–ï¼Œä¸éšæ°´å¹³ä½ç½®å˜åŒ–
+		ambient_temp_.resize(n_ + 1);   //»·¾³ÎÂ¶ÈËæ¸ß¶È±ä»¯£¬²»ËæË®Æ½Î»ÖÃ±ä»¯
 		material_temp_.resize(size_);
 
-		//åˆå§‹åŒ–ç¯å¢ƒæ¸©åº¦
+		//³õÊ¼»¯»·¾³ÎÂ¶È
 		for (int k = 0; k <= n_ + 1; k++)
 		{
 			ambient_temp_[k] = MAX_AMBIENT_TEMP + ((MAX_AMBIENT_TEMP - MIN_AMBIENT_TEMP) / n_ - 1) * (1 - k);
@@ -85,12 +85,12 @@ void CloudEulerGen::CloudGenFrameRun()
 
 const int CloudEulerGen::GetModeFlag()
 {
-    return mode_flag_;
+	return mode_flag_;
 }
 
 const int CloudEulerGen::GetN()
 {
-    return n_;
+	return n_;
 }
 
 const float CloudEulerGen::GetVelocityU(int i, int j, int k)
@@ -174,10 +174,10 @@ void CloudEulerGen::GetDensity()
 {
 	int i, j, k;
 
-	//çƒŸ
+	//ÑÌ
 	if (mode_flag_ == 0)
 	{
-		float adiabatic_lapse_rate;   //ç»çƒ­å¤±æ•ˆç‡
+		float adiabatic_lapse_rate;   //¾øÈÈÊ§Ğ§ÂÊ
 		adiabatic_lapse_rate = 0.02f;   //-----------
 		std::vector<float> pre_vapor_density = vapor_density_;
 		std::vector<float> pre_material_temp = material_temp_;
@@ -191,9 +191,9 @@ void CloudEulerGen::GetDensity()
 			{
 				for (k = 1; k <= n_; k++)
 				{
-					//ç‰©è´¨æ¸©åº¦å‡å»ç»çƒ­å¤±æ•ˆ
+					//ÎïÖÊÎÂ¶È¼õÈ¥¾øÈÈÊ§Ğ§
 					material_temp_[Position(i, j, k)] -= adiabatic_lapse_rate * dt_ * velocity_w_[Position(i, j, k)];
-					//ç›¸å¯¹æ¸©åº¦ä¸å¾—å°äº0ï¼
+					//Ïà¶ÔÎÂ¶È²»µÃĞ¡ÓÚ0£¡
 					if (material_temp_[Position(i, j, k)] < MATERIAL_MIN)
 						material_temp_[Position(i, j, k)] = 0.0f;
 				}
@@ -201,7 +201,7 @@ void CloudEulerGen::GetDensity()
 		}
 	}
 
-	//äº‘
+	//ÔÆ
 	if (mode_flag_ == 1)
 	{
 		std::vector<float> pre_vapor_density = vapor_density_;
@@ -278,18 +278,18 @@ void CloudEulerGen::BoundaryCondition(std::vector<float>& value, const int veloc
 void CloudEulerGen::Advect(std::vector<float>& value, const std::vector<float>& pre_value, const std::vector<float>& velocity_u, const std::vector<float>& velocity_v, const std::vector<float>& velocity_w)
 {
 	int i, j, k;
-	int i0, j0, k0;   //ç›¸å¯¹äºå›æº¯ç‚¹ç©ºé—´ä½ç½®é åçš„ç‚¹çš„ç¼–å·
-	float a, b, c;   //ç›¸å¯¹äºå›æº¯ç‚¹ç©ºé—´ä½ç½®é åçš„ç‚¹åœ¨å›æœ”ç‚¹å¤„çš„æƒå€¼
-	float pastX, pastY, pastZ;   //å›æº¯ç‚¹çš„åæ ‡
-	float diffX, diffY, diffZ;   //å›æº¯ç‚¹åæ ‡ä¸æ‰€åœ¨å•å…ƒæ ¼åº•éƒ¨è·ç¦»
+	int i0, j0, k0;   //Ïà¶ÔÓÚ»ØËİµã¿Õ¼äÎ»ÖÃ¿¿ºóµÄµãµÄ±àºÅ
+	float a, b, c;   //Ïà¶ÔÓÚ»ØËİµã¿Õ¼äÎ»ÖÃ¿¿ºóµÄµãÔÚ»ØË·µã´¦µÄÈ¨Öµ
+	float pastX, pastY, pastZ;   //»ØËİµãµÄ×ø±ê
+	float diffX, diffY, diffZ;   //»ØËİµã×ø±êÓëËùÔÚµ¥Ôª¸ñµ×²¿¾àÀë
 
-	//å°†åŸæ•°æ®æ¸…ç©º
+	//½«Ô­Êı¾İÇå¿Õ
 	for (i = 0; i < size_; i++)
 	{
 		value[i] = 0.0f;
 	}
 
-	//å›æº¯
+	//»ØËİ
 	for (i = 1; i <= n_; i++)
 	{
 		for (j = 1; j <= n_; j++)
@@ -348,14 +348,14 @@ void CloudEulerGen::Advect(std::vector<float>& value, const std::vector<float>& 
 		}
 	}
 
-	//è¾¹ç•Œæ§åˆ¶
+	//±ß½ç¿ØÖÆ
 	BoundaryCondition(value, 0);
 }
 
 void CloudEulerGen::GaussSeidelIteration(std::vector<float>& p, const std::vector<float>& div)
 {
 	int i, j, k;
-	int count;   //è¿­ä»£æ¬¡æ•°
+	int count;   //µü´ú´ÎÊı
 
 	for (count = 0; count < 30; count++)
 	{
@@ -377,10 +377,10 @@ void CloudEulerGen::GaussSeidelIteration(std::vector<float>& p, const std::vecto
 void CloudEulerGen::Project()
 {
 	int i, j, k;
-	std::vector<float> p(size_);   //å‹å¼º
-	std::vector<float> div(size_);   //é€Ÿåº¦æ•£åº¦
+	std::vector<float> p(size_);   //Ñ¹Ç¿
+	std::vector<float> div(size_);   //ËÙ¶ÈÉ¢¶È
 
-	//è®¡ç®—æ¯ä¸ªç½‘æ ¼ç‚¹çš„é€Ÿåº¦æ•£åº¦
+	//¼ÆËãÃ¿¸öÍø¸ñµãµÄËÙ¶ÈÉ¢¶È
 	for (i = 1; i <= n_; i++)
 	{
 		for (j = 1; j <= n_; j++)
@@ -394,7 +394,7 @@ void CloudEulerGen::Project()
 
 	BoundaryCondition(div, 0);
 
-	//è®¡ç®—å‹å¼º
+	//¼ÆËãÑ¹Ç¿
 	GaussSeidelIteration(p, div);
 
 	for (i = 1; i <= n_; i++)
@@ -418,7 +418,7 @@ void CloudEulerGen::Project()
 void CloudEulerGen::AddBouyancySmoke()
 {
 	int i, j, k;
-	float kb, g;   //kbï¼šæµ®åŠ›ç³»æ•° gï¼šé‡åŠ›ç³»æ•°
+	float kb, g;   //kb£º¸¡Á¦ÏµÊı g£ºÖØÁ¦ÏµÊı
 	kb = 0.9f;
 	//!!!!!!!!!!!!
 	g = 0.0f;
@@ -446,7 +446,7 @@ void CloudEulerGen::AddBouyancySmoke()
 void CloudEulerGen::AddBouyancyCloud()
 {
 	int i, j, k;
-	float kb, g;   //kbï¼šæµ®åŠ›ç³»æ•° gï¼šé‡åŠ›ç³»æ•°
+	float kb, g;   //kb£º¸¡Á¦ÏµÊı g£ºÖØÁ¦ÏµÊı
 	kb = 1.0f;
 	g = 0.6f;
 
@@ -470,35 +470,35 @@ void CloudEulerGen::AddBouyancyCloud()
 void CloudEulerGen::VorticityConfinement()
 {
 	int i, j, k;
-	//ä¸­å¿ƒé€Ÿåº¦
+	//ÖĞĞÄËÙ¶È
 	std::vector<float> U(size_);
 	std::vector<float> V(size_);
 	std::vector<float> W(size_);
 
-	//æ—‹åº¦åœº
+	//Ğı¶È³¡
 	std::vector<float> rotation_field_U(size_);
 	std::vector<float> rotation_field_V(size_);
 	std::vector<float> rotation_field_W(size_);
 
-	//æ—‹åº¦åœºå¼ºåº¦
+	//Ğı¶È³¡Ç¿¶È
 	std::vector<float> rf_strength(size_);
 
-	//æ—‹åº¦åœºå¼ºåº¦çš„æ¢¯åº¦
+	//Ğı¶È³¡Ç¿¶ÈµÄÌİ¶È
 	std::vector<float> rfs_gradient_U(size_);
 	std::vector<float> rfs_gradient_V(size_);
 	std::vector<float> rfs_gradient_W(size_);
 
-	//æ—‹åº¦åœºå¼ºåº¦çš„æ¢¯åº¦çš„å•ä½å‘é‡
+	//Ğı¶È³¡Ç¿¶ÈµÄÌİ¶ÈµÄµ¥Î»ÏòÁ¿
 	std::vector<float> rfsg_unit_U(size_);
 	std::vector<float> rfsg_unit_V(size_);
 	std::vector<float> rfsg_unit_W(size_);
 
-	//æ—‹åº¦é™åˆ¶åŠ›
+	//Ğı¶ÈÏŞÖÆÁ¦
 	std::vector<float> vc_U(size_);
 	std::vector<float> vc_V(size_);
 	std::vector<float> vc_W(size_);
 
-	//æ±‚ç½‘æ ¼ä¸­å¿ƒé€Ÿåº¦
+	//ÇóÍø¸ñÖĞĞÄËÙ¶È
 	for (i = 1; i <= n_; i++)
 	{
 		for (j = 1; j <= n_; j++)
@@ -512,7 +512,7 @@ void CloudEulerGen::VorticityConfinement()
 		}
 	}
 
-	//æ±‚ç½‘æ ¼æ—‹åº¦
+	//ÇóÍø¸ñĞı¶È
 	for (i = 1; i <= n_; i++)
 	{
 		for (j = 1; j <= n_; j++)
@@ -526,7 +526,7 @@ void CloudEulerGen::VorticityConfinement()
 		}
 	}
 
-	//æ±‚æ—‹åº¦åœºå¤§å°
+	//ÇóĞı¶È³¡´óĞ¡
 	for (i = 1; i <= n_; i++)
 	{
 		for (j = 1; j <= n_; j++)
@@ -538,7 +538,7 @@ void CloudEulerGen::VorticityConfinement()
 		}
 	}
 
-	//æ±‚æ—‹åº¦åœºå¼ºåº¦çš„æ¢¯åº¦
+	//ÇóĞı¶È³¡Ç¿¶ÈµÄÌİ¶È
 	for (i = 1; i <= n_; i++)
 	{
 		for (j = 1; j <= n_; j++)
@@ -552,7 +552,7 @@ void CloudEulerGen::VorticityConfinement()
 		}
 	}
 
-	//æ±‚æ—‹åº¦åœºå¼ºåº¦çš„æ¢¯åº¦çš„å•ä½å‘é‡
+	//ÇóĞı¶È³¡Ç¿¶ÈµÄÌİ¶ÈµÄµ¥Î»ÏòÁ¿
 	for (i = 1; i <= n_; i++)
 	{
 		for (j = 1; j <= n_; j++)
@@ -576,7 +576,7 @@ void CloudEulerGen::VorticityConfinement()
 		}
 	}
 
-	//æ±‚æ—‹åº¦é™åˆ¶åŠ›
+	//ÇóĞı¶ÈÏŞÖÆÁ¦
 	for (i = 1; i <= n_; i++)
 	{
 		for (j = 1; j <= n_; j++)
@@ -590,7 +590,7 @@ void CloudEulerGen::VorticityConfinement()
 		}
 	}
 
-	//æ›´æ–°é€Ÿåº¦
+	//¸üĞÂËÙ¶È
 	for (i = 1; i <= n_; i++)
 	{
 		for (j = 1; j <= n_; j++)
@@ -608,9 +608,9 @@ void CloudEulerGen::VorticityConfinement()
 void CloudEulerGen::PhaseTransitionCloud()
 {
 	int i, j, k;
-	float alpha;   //ç›¸å˜ç‡
-	float adiabatic_lapse_rate;   //ç»çƒ­å¤±æ•ˆç‡
-	float latent_heat_coefficient;   //æ½œçƒ­ç³»æ•°
+	float alpha;   //Ïà±äÂÊ
+	float adiabatic_lapse_rate;   //¾øÈÈÊ§Ğ§ÂÊ
+	float latent_heat_coefficient;   //Ç±ÈÈÏµÊı
 	alpha = 0.8f;
 	adiabatic_lapse_rate = 0.02f;
 	latent_heat_coefficient = 0.8f;
@@ -622,42 +622,42 @@ void CloudEulerGen::PhaseTransitionCloud()
 		{
 			for (k = 1; k <= n_; k++)
 			{
-				//è®¡ç®—å½“å‰ç½‘æ ¼çš„é¥±å’Œæ°´æ°”å€¼
+				//¼ÆËãµ±Ç°Íø¸ñµÄ±¥ºÍË®ÆøÖµ
 				float temp = 100 * expf(-25.0f / (material_temp_[Position(i, j, k)] + ambient_temp_[k]));
 
-				//æ­£ç›¸å˜
+				//ÕıÏà±ä
 				if (vapor_density_[Position(i, j, k)] >= temp)
 				{
 					phase_transition_cloud[Position(i, j, k)] = alpha * (vapor_density_[Position(i, j, k)] - temp);
-					//æ›´æ–°æ°´æ°”å€¼
+					//¸üĞÂË®ÆøÖµ
 					vapor_density_[Position(i, j, k)] -= (vapor_density_[Position(i, j, k)] - temp);
 				}
-				//åç›¸å˜
+				//·´Ïà±ä
 				else
 				{
 					phase_transition_cloud[Position(i, j, k)] = -alpha * (temp - vapor_density_[Position(i, j, k)]);
-					//å¦‚æœäº‘ä¸å¤Ÿå¡«è¡¥å‰©ä½™æ°´æ°”å€¼
+					//Èç¹ûÔÆ²»¹»Ìî²¹Ê£ÓàË®ÆøÖµ
 					if ((cloud_density_[Position(i, j, k)] + phase_transition_cloud[Position(i, j, k)]) <= MATERIAL_MIN)
 					{
 						phase_transition_cloud[Position(i, j, k)] = -cloud_density_[Position(i, j, k)];
-						//æ›´æ–°æ°´æ°”å€¼
+						//¸üĞÂË®ÆøÖµ
 						vapor_density_[Position(i, j, k)] += (1.0f / alpha) * cloud_density_[Position(i, j, k)];
 					}
-					//å¦‚æœäº‘å¤Ÿå¡«è¡¥å‰©ä½™æ°´æ°”å€¼(åº”è¯¥ç»™ç©ºé—´å†…åˆå§‹åŒ–ä¸€äº›æ°´è’¸æ°”ï¼Ÿ)
+					//Èç¹ûÔÆ¹»Ìî²¹Ê£ÓàË®ÆøÖµ(Ó¦¸Ã¸ø¿Õ¼äÄÚ³õÊ¼»¯Ò»Ğ©Ë®ÕôÆø£¿)
 					else
 					{
-						//æ›´æ–°æ°´æ°”å€¼
+						//¸üĞÂË®ÆøÖµ
 						vapor_density_[Position(i, j, k)] = temp;
 					}
 				}
 
-				//æ›´æ–°äº‘å¯†åº¦
+				//¸üĞÂÔÆÃÜ¶È
 				cloud_density_[Position(i, j, k)] += phase_transition_cloud[Position(i, j, k)];
 
-				//æ›´æ–°ç‰©è´¨æ¸©åº¦
+				//¸üĞÂÎïÖÊÎÂ¶È
 				temp = material_temp_[Position(i, j, k)] - adiabatic_lapse_rate * velocity_w_[Position(i, j, k)] + latent_heat_coefficient * phase_transition_cloud[Position(i, j, k)];
 				if (temp <= MATERIAL_MIN) {
-					//ç›¸å¯¹æ¸©åº¦ä¸å¾—å°äº0ï¼
+					//Ïà¶ÔÎÂ¶È²»µÃĞ¡ÓÚ0£¡
 					material_temp_[Position(i, j, k)] = 0.0f;
 				}
 				else
@@ -676,9 +676,9 @@ void CloudEulerGen::PhaseTransitionCloud()
 void CloudEulerGen::CorrectTimestep()
 {
 	int i, j, k;
-	float current_velocity = 0.0f;   //å½“å‰ç½‘æ ¼é€Ÿåº¦
-	float current_dt = dt_;   //å½“å‰ç½‘æ ¼çº æ­£åæ—¶é—´æ­¥é•¿
-	float min_dt = dt_;  //å½“å‰æœ€å°æ—¶é—´æ­¥é•¿
+	float current_velocity = 0.0f;   //µ±Ç°Íø¸ñËÙ¶È
+	float current_dt = dt_;   //µ±Ç°Íø¸ñ¾ÀÕıºóÊ±¼ä²½³¤
+	float min_dt = dt_;  //µ±Ç°×îĞ¡Ê±¼ä²½³¤
 
 	for (i = 1; i <= n_; i++)
 	{
@@ -687,7 +687,7 @@ void CloudEulerGen::CorrectTimestep()
 			for (k = 1; k <= n_; k++)
 			{
 				current_velocity = sqrtf(powf(velocity_u_[Position(i, j, k)], 2.0) + powf(velocity_v_[Position(i, j, k)], 2.0) + powf(velocity_w_[Position(i, j, k)], 2.0));
-				//1.2ä¸ºé˜ˆå€¼æ§åˆ¶æ—¶é—´æ­¥é•¿å‡å°‘ç¨‹åº¦
+				//1.2ÎªãĞÖµ¿ØÖÆÊ±¼ä²½³¤¼õÉÙ³Ì¶È
 				current_dt = 1.0f / (current_velocity * 1.2);
 				if (min_dt > current_dt)
 					min_dt = current_dt;
@@ -695,9 +695,9 @@ void CloudEulerGen::CorrectTimestep()
 		}
 	}
 
-	//æ›´æ–°æ—¶é—´æ­¥é•¿
+	//¸üĞÂÊ±¼ä²½³¤
 	dt_ = min_dt;
-	//std:: cout << "ä¸‹ä¸€æ¬¡è¿­ä»£æ—¶é—´æ­¥é•¿ï¼š " << dt_ << std::endl;
+	//std:: cout << "ÏÂÒ»´Îµü´úÊ±¼ä²½³¤£º " << dt_ << std::endl;
 }
 
 void CloudEulerGen::SourceControl()

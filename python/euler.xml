@@ -7,6 +7,6 @@
     </Domain>
     <Gravity class="Vector3f" name="重力">0.0 -9.8 0.0</Gravity>
     <TimeStep class="Real" name="模拟步长" type="0(自适应步长)">0.0</TimeStep>
-    <Path class="String" name="路径">./data/visualize_data/filename</Path>
+    <Path class="String" name="路径">density.vti</Path>
     <Frame class="Unsigned" name="模拟帧数">100</Frame>
 </Scene>

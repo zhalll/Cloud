@@ -1,6 +1,8 @@
 # Cloud
 
-使用pybind11库将C++类变换成python模块，并用python调用执行。
+2020.11.08 使用pybind11库将C++类变换成python模块，并用python调用执行。
+2020.11.15 WriteVTI可以将密度数据存储到.vti文件中（ascii形式），C++和python都可调用。
+
 ## 文件结构
 ```
 Cloud
@@ -8,6 +10,9 @@ Cloud
 ├─ CloudEulerGen.cpp
 ├─ CloudEulerGen.h
 ├─ Gen2py.cpp
+├─ README.md
+├─ WriteVTI.cpp
+├─ WriteVTI.h
 ├─ pybind11
 └─ python
        ├─ euler.xml
@@ -44,4 +49,4 @@ pybind11文件太多，没法上传，可以直接去https://github.com/pybind/p
     cd python
     python3 run.py
 
-**ps. 原本的xml文件tag匹配有误，不能解析，所以对xml文件内容有改动**
+**ps. xml文件内容有改动**
