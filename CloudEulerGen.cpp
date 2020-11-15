@@ -118,14 +118,12 @@ const float CloudEulerGen::GetCloudDensity(int i, int j, int k)
 	return cloud_density_[Position(i, j, k)];
 }
 
-const std::vector<float>& CloudEulerGen::GetVaporDensity()
+const std::vector<float>& CloudEulerGen::GetDensityData(int mode_flag)
 {
-	return vapor_density_;
-}
-
-const std::vector<float>& CloudEulerGen::GetCloudDensity()
-{
-	return cloud_density_;
+	if(mode_flag == 0)
+		return vapor_density_;
+	else
+		return cloud_density_;
 }
 
 const float CloudEulerGen::GetAmbientTemp(int k)

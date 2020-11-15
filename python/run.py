@@ -18,9 +18,9 @@ if __name__ == '__main__':
     cloud = CloudEulerGen(arg, epsilon)
     #cloud.CloudGenFrameRun()
     cloud.CloudGenFinalRun(10)
-    density = cloud.GetVaporDensity()
+    data = cloud.GetDensityData(xml_parsed.simType)
     length = xml_parsed.scalar + 2
     width = xml_parsed.scalar + 2
     height = xml_parsed.scalar + 2
     path = xml_parsed.path
-    WriteVTI(length, width, height, density, path)
+    WriteVTI(length, width, height, data, path)

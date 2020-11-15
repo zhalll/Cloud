@@ -38,8 +38,7 @@ public:
 	const float GetVelocityW(int i, int j, int k);
 	const float GetVaporDensity(int i, int j, int k);
 	const float GetCloudDensity(int i, int j, int k);
-	const std::vector<float>& GetVaporDensity();
-	const std::vector<float>& GetCloudDensity();
+	const std::vector<float>& GetDensityData(int mode_flag);
 	const float GetAmbientTemp(int k);
 	const float GetMaterialTemp(int i, int j, int k);
 	const int GetFrameCount();
