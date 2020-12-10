@@ -4,6 +4,8 @@
 
 > 2020.11.15 编写WriteVTI函数，可以将密度数据存储到.vti文件中（ascii形式），C++和python都可调用。
 
+> 2020.12.10 调整XmlParsing类，能解析改动后的xml文件，并输出结果xml文件。
+
 ## 文件结构
 ```
 Cloud
@@ -16,7 +18,8 @@ Cloud
 ├─ WriteVTI.h
 ├─ pybind11
 └─ python
-       ├─ euler.xml
+       ├─ euler_i.xml
+       ├─ euler_s.xml
        ├─ run.py
        └─ xml_parsing.py
 ```
