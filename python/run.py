@@ -17,13 +17,16 @@ if __name__ == '__main__':
 
     cloud = CloudEulerGen(arg, epsilon)
     #cloud.CloudGenFrameRun()
-    cloud.CloudGenFinalRun(10)
-    data = cloud.GetDensityData(xml_parsed.sim_type)
+    #cloud.CloudGenFinalRun(10)
     length = xml_parsed.scale + 1
     width = xml_parsed.scale + 1
     height = xml_parsed.scale + 1
-    result_vti_path = './data/visualize_data/head-binary-zlib.vti'
-    WriteVTI(length, width, height, data, result_vti_path)
+    out_vti_path_prefix = './data/visualize_data/head-binary-zlib'
+    for i in range(xml_parsed.frame):
+        out_vti_path = out_vti_path_prefix + '_' + str(i) + '.vti'
+        cloud.CloudGenFrameRun()
+        data = cloud.GetDensityData(xml_parsed.sim_type)
+        WriteVTI(length, width, height, data, out_vti_path)
 
-    out_xml_file_path = 'euler_s_out.xml'
-    xml_parsed.write_result_xml(out_xml_file_path, result_vti_path)
+    out_xml_path = 'euler_s_out.xml'
+    xml_parsed.write_result_xml(out_xml_path, out_vti_path_prefix + ' .vti')

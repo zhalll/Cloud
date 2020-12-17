@@ -6,6 +6,8 @@
 
 > 2020.12.10 调整XmlParsing类，能解析改动后的xml文件，并输出结果xml文件。
 
+> 2020.12.17 修改run.py，可循环输出多帧密度场的vti文件。
+
 ## 文件结构
 ```
 Cloud
@@ -53,4 +55,3 @@ pybind11文件太多，没法上传，可以直接去https://github.com/pybind/p
     cd python
     python3 run.py
 
-**ps. xml文件内容有改动**
